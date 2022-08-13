@@ -1,0 +1,28 @@
+.test{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.logo:hover{
+  color: #000;
+}
+
+.logo h3{
+  display: inline-block;
+}
+
+.test__form{
+  width: 750px;
+}
+
+.test__input{
+  height: 35px;
+  margin-bottom: 20px;
+}
+
+.test__btn{
+  width: 750px;
+  height: 40px;
+}
