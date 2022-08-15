@@ -1,35 +1,22 @@
 import { Button } from "@mui/material";
-import React, { useEffect } from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { v4 as uuid } from 'uuid';
 import "./Quiz.css";
 import QuizTests from "./QuizTests/QuizTests";
 
-function Quiz({ questions, data }) {
-  let nums = []  
-  let [quiz, setQuiz] = useState(nums)
-
-  for (let i = 1; i <= questions; i++) {
-    nums.push({id: uuid(), number: i, active: false})
+function Quiz({
+  questions,
+  currentPage,
+  currentData,
+  postPerPage,
+  totalPosts,
+  paginate,
+}) {
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
+    pageNumbers.push(i);
   }
 
   
-  const activeFun = (id) => {
-    setQuiz([...quiz],quiz.map(item => {
-      if (item.id == id) {
-        item.active = true
-      }
-      else {
-        item.active = false
-      }
-    }))
-  }
-
-  console.log(quiz);
-
-  
- 
   return (
     <>
       <header className="bg-light p-2">
@@ -37,30 +24,35 @@ function Quiz({ questions, data }) {
           <Link className="logo" to="/">
             <h3>Test</h3>
           </Link>
-          <p className="quiz-num">{questions === "" ? `/10` : `/${questions}`}</p>
+          <p className="quiz-num">
+            {questions === "" ? `/10` : `${currentPage}/${questions}`}
+          </p>
           <Button variant="contained" className="bg-danger">
             Finish
           </Button>
         </div>
       </header>
-      
+
       <section>
-        <div className="quiz d-flex"></div> 
         <div className="container">
           <div className="questions">
-            <ul className="questions__list d-flex flex-wrap justify-content-center">
-              {quiz.map((item, i) => {
+            <ul className="questions__list pagination d-flex flex-wrap justify-content-center">
+              {pageNumbers.map((number, id) => {
                 return (
-                  <li className={item.active ? "active-btn" : ""} onClick={() => activeFun(item.id)}key={i}>
-                    <Button className={item.active ? 'text-white' : 'text-dark'}>{item.number}</Button>
+                  <li
+                    onClick={() => paginate(number)}
+                    className="page-item"
+                    key={id}
+                  >
+                    <a className="page-link" href="#">
+                      {number}
+                    </a>
                   </li>
                 );
               })}
             </ul>
           </div>
-
-          <QuizTests/>
-
+          <QuizTests currentData={currentData} />
         </div>
       </section>
     </>

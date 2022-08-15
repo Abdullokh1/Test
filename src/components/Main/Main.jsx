@@ -33,7 +33,7 @@ function Main({setQuestions}) {
           <NativeSelect
             className="test__input"
           >
-            <option value="Animals">Animals</option>
+            <option value="Animals">Sport</option>
           </NativeSelect>
         </FormControl>
         <Link to="/Quiz">
